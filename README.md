@@ -1,19 +1,33 @@
 # Gaurav Tiwari · personal profile site
 
-Static profile site for Gaurav Tiwari, Research Data Scientist, Boston. Plain HTML, CSS and a small
-amount of JavaScript. No build step, no dependencies.
+Static profile site for Gaurav Tiwari, Research Data Scientist, Boston. Plain HTML, CSS and JavaScript. No build step, no dependencies, no tracking.
+
+Live at <https://gtiwari1992.github.io>.
 
 ## Files
 
 | File | Purpose |
-|---|---|
-| `index.html` | The whole site: hero, about, publications, experience, projects, skills, education, contact |
-| `styles.css` | Styling, light and dark themes, responsive layout |
-| `script.js` | Dark-mode toggle, mobile menu, publication year filter, email link and copy button |
-| `assets/gaurav.jpg` | Headshot (from Google Scholar) |
+| --- | --- |
+| `index.html` | The whole site: hero, stats, about, research themes, publications, experience, projects, skills, education, contact |
+| `styles.css` | Design tokens, light and dark themes, layout, animations |
+| `script.js` | All interactivity (see below). The page is fully readable with JavaScript disabled |
+| `assets/gaurav.jpg` | Headshot |
 | `assets/Gaurav_Tiwari_Resume.pdf` | Public resume for the download button. Contains email only, no phone or street address |
 | `assets/favicon.svg` | Browser tab icon |
 | `.nojekyll` | Tells GitHub Pages to serve files as-is |
+
+## Interactive features
+
+- **Command palette**: press `⌘K` (or `Ctrl K`) to jump to any section, open a profile, toggle the theme, copy the email address, or search publications by title.
+- **Publications**: full-text search (press `/` to focus), filter by type (article / preprint / abstract), year, or topic. Click a bar in the "Output by year" chart or a topic chip to filter. Each entry has a "Cite" button that copies a plain-text citation.
+- **Research themes**: each card links to the related publications with a topic filter applied.
+- **Experience**: expandable timeline with auto-computed durations.
+- **Projects**: filter by technology; cards tilt and glow with the cursor.
+- **Skills**: tabbed categories, keyboard navigable.
+- **Hero**: animated network canvas that reacts to the pointer, rotating role phrases, animated counters.
+- **Dark / light theme**: toggle in the header, remembered across visits, respects system preference on first visit.
+- Scroll-progress bar, active-section nav highlighting, reveal-on-scroll, back-to-top button.
+- All motion is disabled when the OS "reduce motion" setting is on.
 
 ## Preview locally
 
@@ -23,39 +37,37 @@ Open `index.html` in a browser, or run a tiny server from this folder:
 python3 -m http.server 8000
 ```
 
-then visit http://localhost:8000.
+then visit <http://localhost:8000>.
 
 ## Hosting on GitHub Pages
 
-1. Sign in to GitHub as `gtiwari1992` and create a new **public** repository named exactly
-   `gtiwari1992.github.io`. Leave it empty (no README, no .gitignore).
-2. Upload every file in this folder, including the `assets` folder and the hidden `.nojekyll` file.
-   Either drag and drop through the GitHub web interface ("uploading an existing file"), or from a terminal
-   in this folder:
+The repository is named `gtiwari1992.github.io`, so GitHub Pages serves it at the root. In **Settings → Pages**, "Build and deployment" should be set to *Deploy from a branch*, branch `main`, folder `/ (root)`.
 
-   ```bash
-   git init
-   git add .
-   git commit -m "Initial profile site"
-   git branch -M main
-   git remote add origin https://github.com/gtiwari1992/gtiwari1992.github.io.git
-   git push -u origin main
-   ```
-3. In the repository, go to **Settings → Pages**. Under "Build and deployment", set Source to
-   **Deploy from a branch**, Branch to **main** and folder to **/ (root)**. Save.
-4. After about a minute the site is live at **https://gtiwari1992.github.io**.
+Push to `main` and GitHub Pages redeploys automatically within a minute or so.
 
 ## Updating content
 
-- **New publication:** copy one `<li class="pub">` block in `index.html`, edit the title, link, authors,
-  venue and `data-year`, and place it at the top of the list. Add a new year chip in `.pub-filters` if needed.
-  Update the citation numbers in the About panel when convenient.
-- **New role or project:** copy the matching block in the Experience or Projects section.
-- **New resume:** replace `assets/Gaurav_Tiwari_Resume.pdf` with a version that has no phone number or address.
-- Push the change (or upload the edited file). GitHub Pages redeploys automatically.
+### New publication
+
+1. Copy one `<li class="pub">` block in `index.html` and place it at the top of the list (the list is newest first).
+2. Edit the title, link, authors, venue and the `data-year`, `data-type` (`article`, `preprint` or `abstract`) and `data-tags` (comma-separated topics) attributes. Tags feed the topic cloud and the research-theme links, so reuse existing tag names where possible.
+3. Add `is-featured` to the class and copy the `.pub-star` span if it should be starred.
+4. If it is a new year, add a chip in `.pub-filters`. The chart updates itself.
+5. Update the numbers in the stats strip (`data-count`) and the "18 publications" hero badge when convenient.
+
+### New role or project
+
+Copy the matching block in the Experience or Projects section. For roles, set `data-start` (and `data-end`) as `YYYY-MM` on the `.tl-dates` span and the duration is computed automatically.
+
+### New resume
+
+Replace `assets/Gaurav_Tiwari_Resume.pdf` with a version that has no phone number or address.
+
+### Colours and fonts
+
+Everything is driven by CSS custom properties at the top of `styles.css` (`--accent`, `--accent-2`, `--accent-3`, fonts, radii). Change them once and the whole site follows, in both themes.
 
 ## Optional extras
 
-- **Custom domain:** buy a domain, add it under Settings → Pages → Custom domain, and point the domain's DNS
-  at GitHub Pages as described in GitHub's docs.
-- **Analytics:** add a single script tag from a privacy-friendly service such as GoatCounter or Plausible.
+- **Custom domain**: add it under Settings → Pages → Custom domain and point the domain's DNS at GitHub Pages.
+- **Analytics**: add a single script tag from a privacy-friendly service such as GoatCounter or Plausible.
