@@ -166,13 +166,13 @@
       canvas.width = W * dpr; canvas.height = H * dpr;
       canvas.style.width = W + "px"; canvas.style.height = H + "px";
       ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
-      var n = Math.max(28, Math.min(80, Math.round((W * H) / 16000)));
+      var n = Math.max(22, Math.min(60, Math.round((W * H) / 22000)));
       nodes = [];
       for (var i = 0; i < n; i++) {
         nodes.push({
           x: Math.random() * W, y: Math.random() * H,
-          vx: (Math.random() - .5) * .25, vy: (Math.random() - .5) * .25,
-          r: 1.2 + Math.random() * 1.8, hue: Math.random() < .5 ? "a" : "b"
+          vx: (Math.random() - .5) * .18, vy: (Math.random() - .5) * .18,
+          r: 1 + Math.random() * 1.4, hue: Math.random() < .8 ? "a" : "b"
         });
       }
     }
@@ -186,8 +186,8 @@
 
     function draw() {
       ctx.clearRect(0, 0, W, H);
-      var linkDist = 130, i, j, a, b;
-      var baseAlpha = colors.dark ? .55 : .5;
+      var linkDist = 120, i, j, a, b;
+      var baseAlpha = colors.dark ? .32 : .26;
       for (i = 0; i < nodes.length; i++) {
         a = nodes[i];
         if (!reduceMotion) {
@@ -219,8 +219,8 @@
         a = nodes[i];
         var md = Math.hypot(a.x - mouse.x, a.y - mouse.y);
         var glow = md < 160 ? (1 - md / 160) : 0;
-        ctx.fillStyle = rgba(colors[a.hue], baseAlpha + glow * .4);
-        ctx.beginPath(); ctx.arc(a.x, a.y, a.r + glow * 2, 0, Math.PI * 2); ctx.fill();
+        ctx.fillStyle = rgba(colors[a.hue], baseAlpha + glow * .25);
+        ctx.beginPath(); ctx.arc(a.x, a.y, a.r + glow * 1.2, 0, Math.PI * 2); ctx.fill();
       }
     }
     function loop() { if (!visible) return; draw(); if (!reduceMotion) raf = requestAnimationFrame(loop); }
